@@ -1,0 +1,507 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet"  href="{% static 'style.css'%}" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick-theme.min.css">
+  </head>
+  <body>
+    
+    <div id="wrapper">
+      <a href="#" class="crose-img btn-shut">
+        <img src="{% static 'images/misc/bg-crose.png' %}" align="image">
+      </a>
+      {% include 'includes/sidebar.html' %} {%block content%} {%endblock content%}
+    <ul class="store-nav desktop">
+      {% for category  in links %}
+      {% for subcategory in  sublinks %}
+      <li>
+        {% if subcategory.title == 'milk and cheese' %}
+        {% if category.title == 'food' %}
+        <li>
+        <a class="active" href="{{category.get_url}}">food</a>
+        </li>
+        <li>
+        <a href="{{subcategory.get_url}}">milk and cheese</a>
+        </li>
+        {% endif %}
+      </li>
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+      <li>
+        <a href="#">Special Deals</a>
+      </li>
+    </ul>
+  
+
+    <section class="main-content">
+      <div class="left-bar">
+        <ul class="left-nav">
+          <li>
+            <strong><a href="{% url 'store' %}"> store </a></strong>
+          </li>
+          <li>
+            <strong><a href="{% url 'store' %}"> All Products </a></strong>
+          </li>
+          {% for category in links  %}
+          <li>
+            <strong><a href="{{ category.get_url}}">{{category.title}}</a></strong>
+          </li>
+            {% if category.title == 'beauty' %}
+            {% for subcategory in sublinks %}
+            {% if subcategory.title == 'make up' %}
+            <li>
+            <a href="{{ subcategory.get_url}}">make up</a>
+            </li>
+            {% endif %}
+            {% if subcategory.title == 'hair' %}
+            <li>
+            <a href="{{ subcategory.get_url}}">hair</a>
+          </li>
+          <!-- end if of subcategory.title == beauty-->
+          {% endif %}
+          <!--end for of subcategory in sublinks -->
+          {% endfor %}
+          <!--end if of category.title-->
+          {% endif %}
+        
+          {% if category.title == 'salles' %}
+          {% for subcategory in sublinks %}
+          {% if subcategory.title == 'shoes' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">shoes</a>
+          </li>
+          {% endif %}
+          {% if subcategory.title == 'subsale' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">sub sale</a>
+          </li>
+          {% endif %}
+          {% if subcategory.title == 't shirt' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">t shirt</a>
+          </li>
+          <!-- end if of subcategory.title == salles-->
+          {% endif %}
+          <!--end for of subcategory in sublinks -->
+          {% endfor %}
+          <!--end if of category.title-->
+          {% endif %}
+
+          {% if category.title == 'food' %}
+          {% for subcategory in sublinks %}
+          {% if subcategory.title == 'milk and cheese' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">milk and cheese</a>
+          </li>
+          <!-- end if of subcategory.title == food-->
+          {% endif %}
+          <!--end for of subcategory in sublinks -->
+          {% endfor %}
+          <!--end if of category.title-->
+          {% endif %}
+
+          <!-- new category-->
+          {% if category.title == 'home' %}
+          {% for subcategory in sublinks %}
+          {% if subcategory.title == 'tables' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">tables</a>
+          </li>
+          <!-- end if of subcategory.title == tables-->
+          {% endif %}
+          <!--end for of subcategory in sublinks -->
+          {% endfor %}
+          <!--end if of category.title-->
+          {% endif %}
+
+          {% if category.title == 'fashion' %}
+          {% for subcategory in sublinks %}
+          {% if subcategory.title == 'fashion1' %}
+          <li>
+          <a href="{{ subcategory.get_url}}">fashion1</a>
+          </li>
+          <!-- end if of subcategory.title == fashion-->
+          {% endif %}
+          <!--end for of subcategory in sublinks -->
+          {% endfor %}
+          <!--end if of category.title-->
+          {% endif %}
+          <!--end for of category in links-->
+          {% endfor %}
+          </ul>
+          </div>
+        </div>
+      <!--end subsidebar-->
+      <div class="right-content">
+        <h2>Store</h2>
+        <h3>Featured categories</h3>
+        <div class="category-list">
+          <!--get all the product of each category-->
+          {% if products %}
+          {% for product in products %}
+           <div class="cate-column">
+            <a href="{{ product.get_url }}" class="img-box">
+              <img src="{{ product.images.url }}" align="image">
+            </a>
+            <div class="text-box">
+              <span class="price">{{product.price}} &#8362;</span>
+            </div>
+            <a href="{{ product.get_url }}">{{ product.product_name }}</a>
+          </div>
+          {% endfor %}
+          {% else %}
+          <div>
+            <h2>No result found. Please try again.</h2>
+          </div>
+          {% endif %}
+        </div>
+       
+          
+    </section>
+    
+    
+    <footer id="footer">
+      <div class="container">
+        <div class="footer-columns">
+          <div class="column">
+            <h4>Get to Know Us</h4>
+            <ul>
+              <li>
+                <a href="#">Careers</a>
+              </li>
+              <li>
+                <a href="#">Press Release</a>
+              </li>
+              <li>
+                <a href="#">About us</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+              <li>
+                <a href="#">Amazon Logistikblog</a>
+              </li>
+            </ul>
+          </div>
+          <div class="column">
+            <h4>Make Money with Us</h4>
+            <ul>
+              <li>
+                <a href="#">Sell on Amazon</a>
+              </li>
+              <li>
+                <a href="#">Sell on Amazon Business</a>
+              </li>
+              <li>
+                <a href="#">Sell on Amazon Handmade</a>
+              </li>
+              <li>
+                <a href="#">Amazon Pay</a>
+              </li>
+              <li>
+                <a href="#">See All</a>
+              </li>
+            </ul>
+          </div>
+          <div class="column">
+            <h4>Get to Know Us</h4>
+            <ul>
+              <li>
+                <a href="#">Careers</a>
+              </li>
+              <li>
+                <a href="#">Press Release</a>
+              </li>
+              <li>
+                <a href="#">About us</a>
+              </li>
+              <li>
+                <a href="#">Blog</a>
+              </li>
+              <li>
+                <a href="#">Amazon Logistikblog</a>
+              </li>
+            </ul>
+          </div>
+          <div class="column">
+            <h4>Make Money with Us</h4>
+            <ul>
+              <li>
+                <a href="#">Sell on Amazon</a>
+              </li>
+              <li>
+                <a href="#">Sell on Amazon Business</a>
+              </li>
+              <li>
+                <a href="#">Sell on Amazon Handmade</a>
+              </li>
+              <li>
+                <a href="#">Amazon Pay</a>
+              </li>
+              <li>
+                <a href="#">See All</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="footer-botton-bar">
+      <div class="container">
+          <div class="footer-logo">
+            <a href="#">
+              <img src="images/logo.png" alt="image">
+            </a>
+          </div>
+          <div class="switch-lang"> 
+            <div class="current-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_United_Kingdom.png"/>
+              <p class="lang-text">English</p>
+            </div>
+            <div class="lang-dropdown">
+              <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Spain.png"/>
+                <p class="lang-text">Español</p>
+              </div>
+              <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_France.png"/>
+                <p class="lang-text">Français</p>
+              </div>
+              <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Italy.png"/>
+                <p class="lang-text">Italiano </p>
+              </div>
+              <div class="selecting-lang"><img class="lang-flag" src="https://cdn2.iconfinder.com/data/icons/world-flag-icons/128/Flag_of_Germany.png"/>
+                <p class="lang-text">Deutsch</p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="bottom-footer">
+        <div class="bottom-holder">
+          <ul class="footer-nav">
+            <li>
+              <a href="#">Conditions of Use & Sale</a>
+            </li>
+            <li>
+              <a href="#">Privacy Notice</a>
+            </li>
+            <li>
+              <a href="#">Imprint</a>
+            </li>
+            <li>
+              <a href="#">Cookies Notice</a>
+            </li>
+          </ul>
+          <span>© 1996-2022, Amazon.com, Inc. or its affiliates</span>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.9/slick.min.js"></script>
+    <script>
+    
+      $(document).on('click', '.menu', function(event) {
+        $("body").toggleClass("nav-slide");
+      });
+      $(document).on('click', '.btn-shut', function(event) {
+            $('body').removeClass('nav-slide');
+        });
+
+
+      var $this11 = $('.items');
+      if ($this11.find('ul li').length > 2) {
+          $('.items').append('<div><a href="javascript:;" class="showMore"></a></div>');
+      }
+
+      // If more than 2 Education items, hide the remaining
+      $('.items .item').slice(0,3).addClass('shown');
+      $('.items .item').not('.shown').hide();
+      $(document).on('click', '.items .showMore', function(event) {     
+        $(this).parent('div').parent(".items").children('ul').children('.item').not('.shown').toggle(300);
+        // $('.items .item').not('.shown').toggle(300);
+        $(this).toggleClass('showLess');
+      });
+
+      $(".side-drop .holder-1 ul li a").click(function(){
+        $(this).parent().addClass("new-menu");
+      });
+      $(".close-btn").click(function(){
+        $(".side-drop .holder-1 ul li a").parent().removeClass("new-menu");
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.brands-slider').slick({
+          speed: 500,
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          arrows: true,
+          autoplay: false,
+          autoplaySpeed: 2000,
+          responsive: [{
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              autoplay: true,
+              // centerMode: true,
+
+            }
+
+          }, {
+            breakpoint: 800,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              infinite: true,
+
+            }
+          },  {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              autoplay: true,
+              autoplaySpeed: 2000,
+            }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.feature-columns').slick({
+          speed: 500,
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          autoplay: false,
+          autoplaySpeed: 2000,
+          dots:false,
+          arrows: true,
+          responsive: [{
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              autoplay: true,
+            }
+
+          }, {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              dots: true,
+              infinite: true,
+
+            }
+          },  {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              dots: true,
+              infinite: true,
+              autoplay: true,
+              autoplaySpeed: 2000,
+            }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.release-columns').slick({
+          speed: 500,
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          autoplay: false,
+          autoplaySpeed: 2000,
+          dots:false,
+          arrows: true,
+          responsive: [{
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              autoplay: true,
+            }
+
+          }, {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              dots: true,
+              infinite: true,
+
+            }
+          },  {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+              dots: true,
+              infinite: true,
+              autoplay: true,
+              autoplaySpeed: 2000,
+            }
+          }]
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.wish-slider').slick({
+          speed: 500,
+          slidesToShow: 6,
+          slidesToScroll: 1,
+          autoplay: false,
+          autoplaySpeed: 2000,
+          dots:false,
+          arrows: true,
+          responsive: [{
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 1,
+              autoplay: true,
+            }
+
+          }, {
+            breakpoint: 991,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 2,
+              dots: true,
+              infinite: true,
+
+            }
+          },  {
+            breakpoint: 767,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              dots: true,
+              infinite: true,
+              autoplay: true,
+              autoplaySpeed: 2000,
+            }
+          }]
+        });
+      });
+    </script>
+  </body>
+</html>

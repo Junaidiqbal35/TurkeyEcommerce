@@ -1,0 +1,174 @@
+{% load static %}
+<div id="wrapper">
+   <a href="#" class="crose-img btn-shut"> <img src="{% static 'images/misc/bg-crose.png' %}" align="image"> </a>
+<div class="side-drop">
+  <div class="holder-1 item last-nav">
+  <ul class="main-nav">
+  {% if user.id is None %}
+  <div class="user-holder"> <img src="{% static 'images/avatars/user-bg.png' %}" alt="image"> <strong>Hello</strong> </div>
+      <li> <a href="{% url 'login' %}">Sign In</a> </li>
+      <li> <a href="{% url 'register' %}"> Register</a> </li>
+  
+  {% else %}
+   <h7> Welcome {{user.first_name}}</h7>
+   
+      <li> <a href="{% url 'dashboard' %}">Your account</a></li>
+      <li><a href="{% url 'logout' %}">log out</a></li>
+
+  {% endif %}
+  </ul>
+  </div>
+
+  {% for category in links  %}
+   <div class="holder-1 items">
+      <h2>{{category.title}}</h2> <a href="{{category.get_url}}"> </a>
+      {% if category.title == 'beauty' %}
+      {% for subcategory in sublinks %}
+       <ul class="main-nav">
+          {% if subcategory.title == 'make up' %}
+          <li class="item show"> <a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+          {% if subcategory.title == 'hair' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+       </ul>
+       
+      {% endfor %}
+      {% endif %}
+
+      {% if category.title == 'salles' %}
+      {% for subcategory in sublinks %}
+       <ul class="main-nav">
+          {% if subcategory.title == 'skin care' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+          {% if subcategory.title == 'shoes' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+       </ul>
+       
+      {% endfor %}
+      {% endif %}
+      {% if category.title == 'food' %}
+      {% for subcategory in sublinks %}
+       <ul class="main-nav">
+          {% if subcategory.title == 'milk and cheese' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+       </ul>
+       
+      {% endfor %}
+      {% endif %}
+      {% if category.title == 'home' %}
+      {% for subcategory in sublinks %}
+       <ul class="main-nav">
+          {% if subcategory.title == 'tables' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+
+       </ul>
+      {% endfor %}
+      {% endif %}
+      {% if category.title == 'fashion' %}
+      {% for subcategory in sublinks %}
+       <ul class="main-nav">
+          {% if subcategory.title == 't shirt' %}
+          <li class="item show"><a href="{{subcategory.get_url}}">{{subcategory.title}}</a>
+          </li>
+          {% endif %}
+
+       </ul>
+      {% endfor %}
+      {% endif %}
+  </div>
+
+  {% endfor %}
+  
+  <div class="holder-1 item last-nav">
+      <h2>Help & Settings</h2>
+      <ul class="main-nav">
+          <li> <a href="#">Customer Services</a> </li>
+      </ul>
+      <ul class="main-nav">
+        <li>
+      <div id="google_translate_element"style = "text-align: center;"></div>
+      <div class="stylee" style="  padding:0.0001px 0.000001px">
+      </li>
+      </ul>
+  </div>
+</div>
+<header class="top-header">
+  <div class="left-panel">
+      <a href="#" class="menu"> <img src="{% static 'images/misc/bg-menu.png' %}" align="image" class="menu-img"> </a>
+      <div class="logo">
+          <a href="{% url 'home' %}"> <img src="{% static 'images/icons/logo.png' %}" alt="image"> </a>
+      </div>
+  </div>
+  <!-- search box and the categories -->
+  <div class="search-box">
+    <form action="{% url 'search' %}" method='GET'>
+    <input type="text" style="width:100%;" style="border:none;" placeholder="Search..." name="keyword">
+        <button type="submit"> <img src="{% static 'images/icons/bg-search.png' %}" alt="image"> </button>
+    </form>
+  </div>
+  <!-- end search box-->
+  <div class="right-panel"> <a a href="{% url 'login' %}" class="sign-in"> Sign In</a> <a href="#" class="like"><i class="fa fa-heart-o" aria-hidden="true"></i></a> 
+    <a href="{%url 'cart'%}" class="cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    <span {{cart_count}}</span>
+    </a>
+              
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+new google.translate.TranslateElement({pageLanguage: 'en',
+includedLanguages: 'ar,iw,en',
+layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" ></script>
+</div>              
+</div>
+   </div>
+</div>
+<script>
+   $(document).on("click", ".menu", function (event) {
+     $("body").toggleClass("nav-slide");
+   });
+   $(document).on("click", ".btn-shut", function (event) {
+     $("body").removeClass("nav-slide");
+   });
+   var $this = $(".items");
+   if ($this.find("ul li").length > 2) {
+     $(".items").append(
+       '<div><a href="javascript:;" class="showMore"></a></div>'
+     );
+   }
+   // If more than 2 Education items, hide the remaining
+   $(".items .item").slice(0, 3).addClass("shown");
+   $(".items .item").not(".shown").hide();
+   $(document).on("click", ".items .showMore", function (event) {
+     $(this)
+       .parent("div")
+       .parent(".items")
+       .children("ul")
+       .children(".item")
+       .not(".shown")
+       .toggle(300);
+     // $('.items .item').not('.shown').toggle(300);
+     $(this).toggleClass("showLess");
+   });
+   $(".side-drop .holder-1 ul li a").click(function () {
+     $(this).parent().addClass("new-menu");
+   });
+   $(".close-btn").click(function () {
+     $(".side-drop .holder-1 ul li a").parent().removeClass("new-menu");
+   });
+ </script>
+</header>
